@@ -17,16 +17,28 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt 
 
-  email String 
+  email String @unique
   hash String 
 
   firstName String? // ? means optional 
-  title String 
-  description String? 
+  lastName String?
+
+  // will display it as "Users" in the database
+  @@map("Users")
+  Bookmark Bookmark[]
 }
 
 model Bookmark {
   id Int @id @default(autoincrement())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  title String 
+  description String?
+  link String 
+
+  userId Int
+  user User @relation(fields: [userId], references: [id])
+  @@map("bookmarks")
+
 }
